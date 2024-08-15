@@ -1,3 +1,5 @@
+-- Trigger on update if the email changed
+
 DROP TRIGGER IF EXISTS validate_email;
 DELIMITER //
 CREATE TRIGGER validate_email BEFORE UPDATE
