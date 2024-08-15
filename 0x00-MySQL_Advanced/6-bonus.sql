@@ -1,3 +1,5 @@
+-- Create procedure to insert new correction to student
+
 DROP PROCEDURE IF EXISTS AddBonus;
 DELIMITER $$
 CREATE PROCEDURE AddBonus(
