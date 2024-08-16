@@ -1,0 +1,4 @@
+// insert document(row) into Collection(analoge of table in mysql)
+
+db.createCollection("school")
+db.school.insertOne({"name": "Holberton"})
