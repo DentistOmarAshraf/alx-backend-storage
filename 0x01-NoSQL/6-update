@@ -1,8 +1,7 @@
 // Update all recored match filter
 
-db.school.updateMany(
+db.school.update(
 	{ name : "Holberton school" },
-	{
-		$set: { name: "Holberton school", address: "972 Mission street"}
-	}
-)
+	{$set: { name: "Holberton school", address: "972 Mission street"}},
+	{multi: true}
+);
