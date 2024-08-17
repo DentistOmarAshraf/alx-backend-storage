@@ -1,0 +1,3 @@
+// Show how many Document in collection
+
+db.school.estimatedDocumentCount()
