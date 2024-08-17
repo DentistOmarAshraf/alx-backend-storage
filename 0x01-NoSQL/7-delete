@@ -1,3 +1,3 @@
 // Delete Document from collection
 
-db.school.remove({ name: "Holberton school" });
+db.school.deleteMany({ name: "Holberton school" });
