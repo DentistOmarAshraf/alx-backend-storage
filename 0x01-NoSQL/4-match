@@ -1,0 +1,2 @@
+// Find Document match (remember Document is a recore in collection)
+db.school.find({name:"Holberton school"})
