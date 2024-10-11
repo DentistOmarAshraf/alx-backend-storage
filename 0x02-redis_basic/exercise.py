@@ -43,11 +43,14 @@ class Cache:
             return None
         return int(self.get_str(data))
 
-    def get(self, key: str, fn: callable = get_str) -> str:
+    def get(self, key: str, fn: callable = None) -> str:
         """
         get - get data by key
         """
         data = self._redis.get(key)
-        if fn:
-            return fn(data)
+        if fn is None:
+            try:
+                return self.get_int(data)
+            except TypeError:
+                return self.get_str(data)
         return data
