@@ -48,9 +48,6 @@ class Cache:
         get - get data by key
         """
         data = self._redis.get(key)
-        if fn is None:
-            try:
-                return self.get_int(data)
-            except ValueError:
-                return self.get_str(data)
+        if fn and data:
+            return fn(data)
         return data
