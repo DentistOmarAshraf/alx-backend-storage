@@ -4,19 +4,19 @@ Cache - redis exercise
 """
 import redis
 import uuid
-from typing import Union
+from typing import Union, Callable
 from functools import wraps
 
 
-def count_calls(method: callable) -> callable:
+def count_calls(method: Callable) -> Callable:
     """
     count_calls - method store function call in redis
     """
     @wraps(method)
-    def wrapper(inst, *args, **kwargs):
+    def wrapper(self, *args, **kwargs):
         method_name = method.__qualname__
-        inst._redis.incr(method_name)
-        return method(inst, *args, **kwargs)
+        self._redis.incr(method_name)
+        return method(self, *args, **kwargs)
     return wrapper
 
 
