@@ -51,6 +51,6 @@ class Cache:
         if fn is None:
             try:
                 return self.get_int(data)
-            except TypeError:
+            except ValueError:
                 return self.get_str(data)
         return data
