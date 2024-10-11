@@ -4,7 +4,7 @@ Cache - redis exercise
 """
 import redis
 import uuid
-
+from typing import Union
 
 class Cache:
     """
@@ -18,7 +18,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
-    def store(self, data):
+    def store(self, data: Union[str, bytes, int, float]):
         """
         store - generet uuid as a key and store it
         """
