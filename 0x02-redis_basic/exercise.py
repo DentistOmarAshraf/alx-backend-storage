@@ -35,6 +35,20 @@ def call_history(method: Callable) -> Callable:
     return wrapper
 
 
+def replay(method: Callable) -> None:
+    """
+    Print info from redis about method
+    """
+    client = redis.Redis()
+    m_name = method.__qualname__
+    in_list = client.lrange(f"{m_name}:inputs", 0, -1)
+    out_list = client.lrange(f"{m_name}:outputs", 0, -1)
+    combination = list(zip(in_list, out_list))
+    print(f"{m_name} was called {client.get(m_name).decode('utf8')} times:")
+    for input, output in combination:
+        print(f"{m_name}(*{input.decode('utf8')}) -> {output.decode('utf8')}")
+
+
 class Cache:
     """
     Cache - redis exercise
