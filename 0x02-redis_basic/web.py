@@ -7,7 +7,7 @@ import redis
 from functools import wraps
 from typing import Callable
 
-clinet = redis.Redis()
+client = redis.Redis()
 
 
 def count_url(method: Callable) -> Callable:
@@ -16,10 +16,10 @@ def count_url(method: Callable) -> Callable:
     """
     @wraps(method)
     def wrapper(url):
-        clinet.set(f"cached:{url}", 0)
-        clinet.incr(f"count:{url}")
-        clinet.setex(f"cached:{url}", 10, clinet.get(f"cached:{url}"))
-        return method(url)
+        if(client.get(f"count:{url}")):
+            client.incr(f"count:{url}")
+        else:
+            client.setex(f"count:{url}", 10, 1)
     return wrapper
 
 
