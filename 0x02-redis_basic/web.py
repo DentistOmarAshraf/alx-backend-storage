@@ -16,10 +16,14 @@ def count_url(method: Callable) -> Callable:
     """
     @wraps(method)
     def wrapper(url):
-        if(client.get(f"count:{url}")):
-            client.incr(f"count:{url}")
-        else:
-            client.setex(f"count:{url}", 10, 1)
+        client.incr(f'count:{url}')
+        result = client.get(f'result:{url}')
+        if result:
+            return result.decode('utf-8')
+        result = method(url)
+        client.set(f'count:{url}', 0)
+        client.setex(f'result:{url}', 10, result)
+        return result
     return wrapper
 
 
