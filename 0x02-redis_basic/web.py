@@ -17,7 +17,7 @@ def count_url(method: Callable) -> Callable:
     @wraps(method)
     def wrapper(url):
         if clinet.ttl(url) <= -1:
-            clinet.setex(f"count{url}", 10, 1)
+            clinet.setex(f"count{url}", 10, 0)
         else:
             clinet.incr(f"count{url}")
         return method(url)
