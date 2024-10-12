@@ -16,10 +16,9 @@ def count_url(method: Callable) -> Callable:
     """
     @wraps(method)
     def wrapper(url):
-        if clinet.ttl(f"count:{url}") <= -1:
-            clinet.setex(f"count:{url}", 10, 0)
-        else:
-            clinet.incr(f"count:{url}")
+        clinet.set(f"cached:{url}", 0)
+        clinet.incr(f"count:{url}")
+        clinet.setex(f"cached:{url}", 10, clinet.get(f"cached:{url}"))
         return method(url)
     return wrapper
 
@@ -30,6 +29,7 @@ def get_page(url: str) -> str:
     get_page
     """
     return requests.get(url).text
+
 
 if __name__ == "__main__":
     get_page("https://google.com")
